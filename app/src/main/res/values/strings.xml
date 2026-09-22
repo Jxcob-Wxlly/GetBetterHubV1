@@ -1,0 +1,93 @@
+<resources>
+    <string name="app_name">Get Better Hub</string>
+
+    <!-- Auth -->
+    <string name="sign_in">Sign in</string>
+    <string name="create_account">Create account</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="display_name">Display name</string>
+    <string name="continue_with_google">Continue with Google</string>
+    <string name="new_here">New here? Create an account</string>
+    <string name="already_have_account">Already have an account? Sign in</string>
+    <string name="or">or</string>
+
+    <!-- Home -->
+    <string name="good_morning">Good morning</string>
+    <string name="good_afternoon">Good afternoon</string>
+    <string name="good_evening">Good evening</string>
+    <string name="day_streak">DAY STREAK</string>
+    <string name="level">LEVEL</string>
+    <string name="xp">XP</string>
+    <string name="jump_back_in">Jump back in</string>
+    <string name="recent_sessions">RECENT SESSIONS</string>
+    <string name="nothing_here_yet">Nothing here yet.</string>
+    <string name="synced">Synced</string>
+    <string name="syncing">Syncing…</string>
+
+    <!-- Nav -->
+    <string name="nav_home">Home</string>
+    <string name="nav_practice">Practice</string>
+    <string name="nav_mood">Mood</string>
+    <string name="nav_lyrics">Lyrics</string>
+    <string name="nav_journal">Journal</string>
+    <string name="nav_arena">Arena</string>
+
+    <!-- Practice Roulette -->
+    <string name="practice_roulette">Practice Roulette</string>
+    <string name="practice_roulette_subtitle">A random drill matched to your instrument and level.</string>
+    <string name="spin_the_roulette">Spin the roulette</string>
+    <string name="spin_again">Spin again</string>
+    <string name="start_timer">Start timer</string>
+    <string name="mark_complete">Mark complete</string>
+
+    <!-- Mood Coach -->
+    <string name="mood_coach">Mood Coach</string>
+    <string name="mood_coach_subtitle">Tell us where your head is at and we will pick the work.</string>
+    <string name="energy_level">Energy level</string>
+    <string name="get_my_plan">Get my plan</string>
+    <string name="mood_energised">Energised</string>
+    <string name="mood_flat">Flat</string>
+    <string name="mood_anxious">Anxious</string>
+    <string name="mood_blocked">Blocked</string>
+    <string name="mood_frustrated">Frustrated</string>
+    <string name="mood_inspired">Inspired</string>
+
+    <!-- Lyric Sketchpad -->
+    <string name="lyric_sketchpad">Lyric Sketchpad</string>
+    <string name="new_draft">New draft</string>
+    <string name="title_label">Title</string>
+    <string name="lyrics_label">Lyrics</string>
+    <string name="untitled">Untitled</string>
+    <string name="save">Save</string>
+
+    <!-- Soundscape Journal -->
+    <string name="soundscape_journal">Soundscape Journal</string>
+    <string name="soundscape_journal_subtitle">Private voice notes. Only you can hear these.</string>
+    <string name="record">Record</string>
+    <string name="stop">Stop</string>
+
+    <!-- Challenge Arena -->
+    <string name="challenge_arena">Challenge Arena</string>
+    <string name="challenge_arena_subtitle">Join a challenge, post your evidence, and back other players.</string>
+    <string name="tab_feed">Feed</string>
+    <string name="tab_challenges">Challenges</string>
+    <string name="tab_leaderboard">Leaderboard</string>
+    <string name="share_a_post">Share a post</string>
+    <string name="caption">Caption</string>
+    <string name="challenge_label">Challenge</string>
+    <string name="no_challenge">No challenge</string>
+    <string name="practice_evidence">Practice evidence</string>
+    <string name="no_linked_session">No linked session</string>
+    <string name="attach_audio_or_image">Attach audio or image</string>
+    <string name="join_challenge">Join challenge</string>
+    <string name="badges">BADGES</string>
+    <string name="add_a_comment">Add a comment</string>
+
+    <!-- Settings -->
+    <string name="app_language">App language</string>
+    <string name="notifications">Notifications</string>
+    <string name="privacy">Privacy</string>
+    <string name="offline_sync">Offline sync</string>
+    <string name="log_out">Log out</string>
+</resources>

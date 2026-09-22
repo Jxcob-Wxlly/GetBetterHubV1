@@ -1,0 +1,84 @@
+<resources>
+    <string name="app_name">Get Better Hub</string>
+
+    <string name="sign_in">Teken in</string>
+    <string name="create_account">Skep rekening</string>
+    <string name="email">E-pos</string>
+    <string name="password">Wagwoord</string>
+    <string name="display_name">Vertoonnaam</string>
+    <string name="continue_with_google">Gaan voort met Google</string>
+    <string name="new_here">Nuut hier? Skep \'n rekening</string>
+    <string name="already_have_account">Het jy reeds \'n rekening? Teken in</string>
+    <string name="or">of</string>
+
+    <string name="good_morning">Goeie môre</string>
+    <string name="good_afternoon">Goeie middag</string>
+    <string name="good_evening">Goeie naand</string>
+    <string name="day_streak">DAE AGTEREENVOLGENS</string>
+    <string name="level">VLAK</string>
+    <string name="xp">XP</string>
+    <string name="jump_back_in">Gaan voort waar jy opgehou het</string>
+    <string name="recent_sessions">ONLANGSE SESSIES</string>
+    <string name="nothing_here_yet">Niks hier nog nie.</string>
+    <string name="synced">Gesinkroniseer</string>
+    <string name="syncing">Sinkroniseer…</string>
+
+    <string name="nav_home">Tuis</string>
+    <string name="nav_practice">Oefening</string>
+    <string name="nav_mood">Bui</string>
+    <string name="nav_lyrics">Lirieke</string>
+    <string name="nav_journal">Joernaal</string>
+    <string name="nav_arena">Arena</string>
+
+    <string name="practice_roulette">Oefenroulette</string>
+    <string name="practice_roulette_subtitle">\'n Ewekansige oefening wat by jou instrument en vlak pas.</string>
+    <string name="spin_the_roulette">Draai die roulette</string>
+    <string name="spin_again">Draai weer</string>
+    <string name="start_timer">Begin tydhouer</string>
+    <string name="mark_complete">Merk voltooi</string>
+
+    <string name="mood_coach">Buierafrigter</string>
+    <string name="mood_coach_subtitle">Vertel ons hoe jy voel en ons sal die regte oefening kies.</string>
+    <string name="energy_level">Energievlak</string>
+    <string name="get_my_plan">Kry my plan</string>
+    <string name="mood_energised">Energiek</string>
+    <string name="mood_flat">Pap</string>
+    <string name="mood_anxious">Angstig</string>
+    <string name="mood_blocked">Geblokkeer</string>
+    <string name="mood_frustrated">Gefrustreerd</string>
+    <string name="mood_inspired">Geïnspireer</string>
+
+    <string name="lyric_sketchpad">Lirieke-skryfblok</string>
+    <string name="new_draft">Nuwe konsep</string>
+    <string name="title_label">Titel</string>
+    <string name="lyrics_label">Lirieke</string>
+    <string name="untitled">Ongetiteld</string>
+    <string name="save">Stoor</string>
+
+    <string name="soundscape_journal">Klanklandskap-joernaal</string>
+    <string name="soundscape_journal_subtitle">Private stemnotas. Net jy kan dit hoor.</string>
+    <string name="record">Neem op</string>
+    <string name="stop">Stop</string>
+
+    <string name="challenge_arena">Uitdagingarena</string>
+    <string name="challenge_arena_subtitle">Sluit by \'n uitdaging aan, plaas jou bewys, en ondersteun ander spelers.</string>
+    <string name="tab_feed">Voer</string>
+    <string name="tab_challenges">Uitdagings</string>
+    <string name="tab_leaderboard">Puntelys</string>
+    <string name="share_a_post">Deel \'n plasing</string>
+    <string name="caption">Onderskrif</string>
+    <string name="challenge_label">Uitdaging</string>
+    <string name="no_challenge">Geen uitdaging</string>
+    <string name="practice_evidence">Oefenbewys</string>
+    <string name="no_linked_session">Geen gekoppelde sessie</string>
+    <string name="attach_audio_or_image">Heg oudio of beeld aan</string>
+    <string name="join_challenge">Sluit by uitdaging aan</string>
+    <string name="badges">KENTEKENS</string>
+    <string name="add_a_comment">Voeg \'n opmerking by</string>
+
+    <string name="app_language">Apptaal</string>
+    <string name="notifications">Kennisgewings</string>
+    <string name="privacy">Privaatheid</string>
+    <string name="offline_sync">Vanlyn sinkronisasie</string>
+    <string name="log_out">Teken uit</string>
+</resources>

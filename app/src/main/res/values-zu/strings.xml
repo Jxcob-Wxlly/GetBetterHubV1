@@ -1,0 +1,84 @@
+<resources>
+    <string name="app_name">Get Better Hub</string>
+
+    <string name="sign_in">Ngena</string>
+    <string name="create_account">Dala i-akhawunti</string>
+    <string name="email">I-imeyili</string>
+    <string name="password">Iphasiwedi</string>
+    <string name="display_name">Igama elibonakalayo</string>
+    <string name="continue_with_google">Qhubeka nge-Google</string>
+    <string name="new_here">Umusha lapha? Dala i-akhawunti</string>
+    <string name="already_have_account">Usunayo i-akhawunti? Ngena</string>
+    <string name="or">noma</string>
+
+    <string name="good_morning">Sawubona ekuseni</string>
+    <string name="good_afternoon">Sawubona emini</string>
+    <string name="good_evening">Sawubona kusihlwa</string>
+    <string name="day_streak">IZINSUKU ZOKULANDELANA</string>
+    <string name="level">IZINGA</string>
+    <string name="xp">I-XP</string>
+    <string name="jump_back_in">Qhubeka lapho ushiye khona</string>
+    <string name="recent_sessions">IMISEBENZI YAMANJE</string>
+    <string name="nothing_here_yet">Akukho lutho lapha okwamanje.</string>
+    <string name="synced">Kuvunyelaniswe</string>
+    <string name="syncing">Iyavumelanisa…</string>
+
+    <string name="nav_home">Ikhaya</string>
+    <string name="nav_practice">Ukuzilolonga</string>
+    <string name="nav_mood">Isimo somqondo</string>
+    <string name="nav_lyrics">Amazwi engoma</string>
+    <string name="nav_journal">Ijenali</string>
+    <string name="nav_arena">Inkundla</string>
+
+    <string name="practice_roulette">Ukuzilolonga okungahleliwe</string>
+    <string name="practice_roulette_subtitle">Umsebenzi okhethwe ngokungahleliwe ohambisana nesikhali sakho nezinga lakho.</string>
+    <string name="spin_the_roulette">Phendula ivili</string>
+    <string name="spin_again">Phinda uphendule</string>
+    <string name="start_timer">Qala isikhathi</string>
+    <string name="mark_complete">Phawula njengokuqediwe</string>
+
+    <string name="mood_coach">Umqeqeshi wesimo somqondo</string>
+    <string name="mood_coach_subtitle">Sitshele ukuthi umqondo wakho unjani sizokhetha umsebenzi ofanele.</string>
+    <string name="energy_level">Izinga lamandla</string>
+    <string name="get_my_plan">Thola uhlelo lwami</string>
+    <string name="mood_energised">Namandla</string>
+    <string name="mood_flat">Ayikho into</string>
+    <string name="mood_anxious">Ukhathazekile</string>
+    <string name="mood_blocked">Uvinjelwe</string>
+    <string name="mood_frustrated">Udumele</string>
+    <string name="mood_inspired">Ugqugquzelekile</string>
+
+    <string name="lyric_sketchpad">Ipheshana lamazwi</string>
+    <string name="new_draft">Uhlaka olusha</string>
+    <string name="title_label">Isihloko</string>
+    <string name="lyrics_label">Amazwi engoma</string>
+    <string name="untitled">Alinasihloko</string>
+    <string name="save">Gcina</string>
+
+    <string name="soundscape_journal">Ijenali yomsindo</string>
+    <string name="soundscape_journal_subtitle">Amanothi ezwi ayimfihlo. Wena kuphela ongawezwa.</string>
+    <string name="record">Qopha</string>
+    <string name="stop">Misa</string>
+
+    <string name="challenge_arena">Inkundla yemiqhudelwano</string>
+    <string name="challenge_arena_subtitle">Joyina umqhudelwano, thumela ubufakazi, futhi usekele abanye abadlali.</string>
+    <string name="tab_feed">Uhlu</string>
+    <string name="tab_challenges">Imiqhudelwano</string>
+    <string name="tab_leaderboard">Ibhodi labaholi</string>
+    <string name="share_a_post">Yabelana ngeposi</string>
+    <string name="caption">Umbhalo</string>
+    <string name="challenge_label">Umqhudelwano</string>
+    <string name="no_challenge">Akukho mqhudelwano</string>
+    <string name="practice_evidence">Ubufakazi bokuzilolonga</string>
+    <string name="no_linked_session">Akukho msebenzi oxhunyiwe</string>
+    <string name="attach_audio_or_image">Faka umsindo noma isithombe</string>
+    <string name="join_challenge">Joyina umqhudelwano</string>
+    <string name="badges">AMABHAJI</string>
+    <string name="add_a_comment">Engeza umbono</string>
+
+    <string name="app_language">Ulimi lohlelo</string>
+    <string name="notifications">Izaziso</string>
+    <string name="privacy">Ubumfihlo</string>
+    <string name="offline_sync">Ukuvumelanisa ngaphandle kwe-inthanethi</string>
+    <string name="log_out">Phuma</string>
+</resources>
