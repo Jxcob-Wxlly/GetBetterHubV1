@@ -283,7 +283,7 @@ Permissions are declared in the Android application manifest.
 
 ---
 
-## 🎯 Project Goals
+## Project Goals
 
 GetBetterHub was developed as a practical Android application demonstrating the integration of multiple technologies within a single mobile project.
 
@@ -330,7 +330,7 @@ GitHub: [@Jxcob-Wxlly](https://github.com/Jxcob-Wxlly)
 
 ---
 
-## 📄 Project Status
+## Project Status
 
 **Version:** 1.0
 **Platform:** Android
