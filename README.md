@@ -91,8 +91,6 @@ Full setup detail, including deploying the backend to Azure, is in `GetBetterHub
 
 - Multi-language resources (English/isiZulu/Afrikaans) exist but aren't yet wired into the screens - UI text is currently English-only.
 - No dedicated Settings screen yet.
-- No automated tests yet.
-- Verified by careful review rather than a live build in this dev environment - first build may surface something minor.
 
 ## Author
 
