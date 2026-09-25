@@ -24,8 +24,8 @@ Built for **OPSC6312 (Open Source Coding)** - Portfolio of Evidence, Part II.
 
 **Android app**
 - Kotlin, Jetpack Compose (Material 3)
-- Room — local, offline-first persistence
-- Retrofit + OkHttp — REST API client
+- Room - local, offline-first persistence
+- Retrofit + OkHttp - REST API client
 - Google Sign-In (OAuth 2.0 SSO)
 - Native `MediaRecorder` / `MediaPlayer` for real audio capture and playback
 
