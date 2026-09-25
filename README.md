@@ -87,9 +87,9 @@ Every write (a completed practice session, a saved lyric draft, a journal record
 
 Full setup detail, including deploying the backend to Azure, is in `GetBetterHub-backend/GetBetterHub.Api/README.md`.
 
-## Known limitations
+## Current limitations
 
-- Multi-language resources (English/isiZulu/Afrikaans) exist but aren't yet wired into the screens - UI text is currently English-only.
+- Multi-language resources (English/isiZulu/Afrikaans and possibly isiXhosa) exist but aren't yet wired into the screens - UI text is currently English-only.
 - No dedicated Settings screen yet.
 
 ## Author
