@@ -1,339 +1,99 @@
-# GetBetterHub
+# Get Better Hub (GBH)
 
-> **A modern Android application built to help users work towards becoming a better version of themselves.**
+A cross-discipline music practice app for Android - guided practice drills, mood-based coaching, lyric writing, an audio practice journal, and a community challenge arena, backed by a REST API.
 
-GetBetterHub is an Android application developed using **Kotlin and Jetpack Compose**, with a focus on modern Android development practices, local data persistence, API integration, authentication, and accessibility through multilingual support.
+Built for **OPSC6312 (Open Source Coding)** - Portfolio of Evidence, Part II.
 
-The application is designed around a combination of online and offline functionality, allowing locally cached information to remain available when an internet connection is unavailable.
+**Demo video:** https://youtu.be/sl6WmZgiOac?si=gEWJmVy7EOq6vkgt
 
 ---
 
-## Overview
+## What it does
 
-GetBetterHub is a personal-development focused Android application that brings together user-oriented functionality within a modern mobile interface.
+| Screen | What it's for |
+|---|---|
+| **Login / Register** | Email + encrypted password, or Google SSO |
+| **Home Dashboard** | Streak, level, XP, and quick access to every feature |
+| **Practice Roulette** | Spins a random practice drill matched to instrument/level, with a live timer |
+| **Mood Coach** | Pick how practice feels right now; get a tailored session suggestion |
+| **Lyric Sketchpad** | Write and save lyric drafts, synced across devices |
+| **Soundscape Journal** | Record real audio practice notes (mic recording + playback), synced to the server |
+| **Challenge Arena** | Community feed, weekly challenges, leaderboard, and earned badges - post practice evidence pulled straight from your Journal |
 
-The application uses a hybrid data approach:
+## Tech stack
 
-```text
-                    ┌──────────────────┐
-                    │   GetBetterHub   │
-                    │   Android App    │
-                    └────────┬─────────┘
-                             │
-                ┌────────────┴────────────┐
-                │                         │
-        ┌───────▼───────┐       ┌─────────▼─────────┐
-        │   Local Data  │       │    Remote API     │
-        │     Room      │       │ Retrofit / Gson   │
-        └───────┬───────┘       └─────────┬─────────┘
-                │                         │
-                └────────────┬────────────┘
-                             │
-                     ┌───────▼───────┐
-                     │  Compose UI   │
-                     │  Material 3   │
-                     └───────────────┘
+**Android app**
+- Kotlin, Jetpack Compose (Material 3)
+- Room — local, offline-first persistence
+- Retrofit + OkHttp — REST API client
+- Google Sign-In (OAuth 2.0 SSO)
+- Native `MediaRecorder` / `MediaPlayer` for real audio capture and playback
+
+**Backend API**
+- ASP.NET Core Web API (.NET 8)
+- Entity Framework Core + SQL Server (LocalDB for local dev, Azure SQL for production)
+- JWT bearer authentication, BCrypt password hashing
+- Google ID token verification for SSO
+- Local file storage for uploaded audio (swappable for Azure Blob Storage)
+
+## How it works: offline-first with sync
+
+Every write (a completed practice session, a saved lyric draft, a journal recording) lands in the local Room database immediately, so the app never blocks on a network connection. Each item is tagged `synced = false` until it's successfully pushed to the API. A sync sweep runs automatically whenever you're signed in, retrying anything still pending - so going offline never loses data, it just waits for a connection.
+
+## Project structure
+
+```
+.
+├── GetBetterHub-android/     # Android app (Kotlin, Jetpack Compose)
+│   └── app/src/main/java/com/getbetterhub/app/
+│       ├── ui/screens/       # One Composable per screen
+│       ├── ui/components/    # Shared UI building blocks
+│       ├── ui/theme/         # Colors, typography
+│       ├── data/local/       # Room database, DAOs, offline repository
+│       ├── data/remote/      # Retrofit API, network repository, JWT token store
+│       └── audio/            # MediaRecorder/MediaPlayer wrapper
+│
+└── GetBetterHub-backend/     # ASP.NET Core Web API
+    └── GetBetterHub.Api/
+        ├── Controllers/      # Auth, Users, PracticeSessions, JournalEntries, LyricDrafts, PerformancePosts, Uploads
+        ├── Models/           # EF Core entities
+        ├── DTOs/             # Request/response shapes
+        ├── Data/             # DbContext
+        └── Services/         # JWT issuing, current-user helpers
 ```
 
-This approach allows the application to work with locally persisted information while also communicating with a remote ASP.NET Core API.
-
----
-
-## Key Features & Capabilities
-
-### Modern Android UI
-
-* Built with **Jetpack Compose**
-* Material 3 design components
-* Compose Navigation for screen-to-screen navigation
-* Extended Material icons
-* Responsive Android interface
-
-### Offline Data Support
-
-GetBetterHub incorporates **Room Database** for local data persistence.
-
-This provides the foundation for:
-
-* Local caching
-* Offline access
-* Persistent application data
-* Synchronisation between local and remote data
-
-### API Integration
-
-The application communicates with a remote backend using:
-
-* **Retrofit**
-* **Gson**
-* **OkHttp**
-* Logging interceptors
-
-The backend integration is designed around an **ASP.NET Core API**.
-
-### Authentication
-
-The application includes support for **Google Sign-In / SSO**, providing users with an alternative authentication method through their Google account.
-
-### Multilingual Support
-
-GetBetterHub provides language resources for:
-
-* 🇬🇧 English
-* 🇿🇦 isiZulu
-* 🇿🇦 Afrikaans
-
-The application is configured to select language resources according to the device locale, with support for changing the language through the application.
-
-### Notifications
-
-The application requests notification permissions where required by the Android platform.
-
-### Audio Support
-
-The application includes Android microphone access through the `RECORD_AUDIO` permission, supporting functionality that requires audio input.
-
----
-
-## Technology Stack
-
-| Technology             | Purpose                                |
-| ---------------------- | -------------------------------------- |
-| **Kotlin**             | Primary programming language           |
-| **Android SDK**        | Mobile application platform            |
-| **Jetpack Compose**    | Declarative UI framework               |
-| **Material 3**         | UI components and design system        |
-| **Navigation Compose** | Application navigation                 |
-| **Room**               | Local database and offline persistence |
-| **Retrofit**           | REST API communication                 |
-| **Gson**               | JSON serialization/deserialization     |
-| **OkHttp**             | HTTP client and network logging        |
-| **Google Sign-In**     | Authentication / SSO                   |
-| **Gradle Kotlin DSL**  | Build configuration                    |
-| **JUnit**              | Unit testing                           |
-| **AndroidX Testing**   | Android instrumentation/UI testing     |
-
----
-
-## Technical Architecture
-
-GetBetterHub follows a modern Android architecture centred around separation between the user interface, local persistence, and remote services.
-
-
-
-## Android Configuration
-
-| Configuration    | Value                  |
-| ---------------- | ---------------------- |
-| Application ID   | `com.getbetterhub.app` |
-| Minimum SDK      | 26                     |
-| Target SDK       | 34                     |
-| Compile SDK      | 34                     |
-| Version          | 1.0                    |
-| Primary Language | Kotlin                 |
-| UI Framework     | Jetpack Compose        |
-
-The project also limits packaged language resources to English, isiZulu, and Afrikaans.
-
----
-
-## Getting Started
-
-### Prerequisites
-
-Before building GetBetterHub, install:
-
-* [Android Studio](https://developer.android.com/studio)
-* Android SDK
-* A compatible JDK
-* An Android emulator or physical Android device
-
-### Clone the Repository
-
-```bash
-git clone https://github.com/Jxcob-Wxlly/GetBetterHubV1.git
-```
-
-Navigate into the project:
-
-```bash
-cd GetBetterHubV1
-```
-
-### Open in Android Studio
-
-1. Open Android Studio.
-2. Select **Open**.
-3. Select the cloned `GetBetterHubV1` directory.
-4. Allow Gradle to synchronise.
-5. Connect an Android device or launch an emulator.
-6. Run the `app` configuration.
-
----
-
-## Build Configuration
-
-The application uses **Gradle Kotlin DSL** for build configuration.
-
-The Android module is configured with:
-
-* Kotlin Android support
-* Kotlin annotation processing
-* Jetpack Compose
-* Room
-* Retrofit
-* OkHttp
-* Google authentication
-* AndroidX testing libraries
-
-The current release configuration has code shrinking disabled, making the project suitable for development and academic demonstration.
-
----
-
-## Testing
-
-Testing dependencies are included for both unit and Android instrumentation testing.
-
-### Unit Testing
-
-```text
-JUnit 4.13.2
-```
-
-### Android Testing
-
-```text
-AndroidX Test JUnit
-Espresso
-Compose UI Testing
-```
-
-This provides a foundation for testing application logic, Android components, and Compose-based interfaces.
-
----
-
-## Backend Communication
-
-GetBetterHub is designed to communicate with an **ASP.NET Core API** through Retrofit.
-
-```text
-Android Application
-       │
-       │ HTTP Requests
-       ▼
-    Retrofit
-       │
-       ▼
-      Gson
-       │
-       ▼
-   ASP.NET Core API
-```
-
-OkHttp's logging interceptor is included to assist with monitoring and debugging network requests during development.
-
----
-
-
-## Localization
-
-GetBetterHub is configured with three supported languages:
-
-```text
-English
-isiZulu
-Afrikaans
-```
-
-Language resources are separated using Android's resource-qualifier system.
-
-This allows the application to provide localized content based on the user's device language while also supporting an in-app language selection mechanism.
-
----
-
-## Permissions
-
-The application currently declares permissions for:
-
-| Permission           | Purpose                            |
-| -------------------- | ---------------------------------- |
-| `INTERNET`           | Communication with remote services |
-| `RECORD_AUDIO`       | Audio/microphone functionality     |
-| `POST_NOTIFICATIONS` | Application notifications          |
-
-Permissions are declared in the Android application manifest.
-
----
-
-## 📸 Screenshots
-### Home Screen
-
-
-
-### Authentication
-
-
-
-### Main Application Interface
-
-
-
-### Additional Features
-
-
----
-
-## Project Goals
-
-GetBetterHub was developed as a practical Android application demonstrating the integration of multiple technologies within a single mobile project.
-
-The project provides experience with:
-
-* Android application development
-* Kotlin
-* Jetpack Compose
-* Modern UI development
-* REST API integration
-* Local database persistence
-* Offline data handling
-* Authentication
-* Localization
-* Android permissions
-* Automated testing foundations
-* Gradle-based project configuration
-
----
-
-## Potential Future Improvements
-
-Potential future development could include:
-
-* Expanded automated test coverage
-* Improved offline synchronisation strategies
-* Enhanced error handling and network recovery
-* Additional language support
-* Production release configuration
-* CI/CD integration
-* Improved application analytics
-* Additional accessibility features
-* Further backend optimisation
-
----
+## Getting it running
+
+### Backend
+
+1. Install the [.NET 8 SDK](https://dotnet.microsoft.com/download) and SQL Server LocalDB (comes with Visual Studio's ".NET desktop development" workload).
+2. In `GetBetterHub-backend/GetBetterHub.Api/appsettings.json`, set a real `Jwt:Key` (32+ random characters) and, if testing Google SSO, your `Google:ClientId`.
+3. From that folder:
+   ```
+   dotnet tool install --global dotnet-ef   # once
+   dotnet ef migrations add InitialCreate
+   dotnet ef database update
+   dotnet run
+   ```
+4. Swagger UI is available at `/swagger` for trying endpoints directly.
+
+### Android app
+
+1. Open `GetBetterHub-android/` in Android Studio via **File → Open** (not *New Project*) and let Gradle sync.
+2. Point the app at your running backend in `NetworkModule.kt`:
+   - Emulator → `http://10.0.2.2:<port>/`
+   - Physical device → your machine's LAN IP, same Wi-Fi network
+3. Run on an emulator or device (minSdk 26).
+
+Full setup detail, including deploying the backend to Azure, is in `GetBetterHub-backend/GetBetterHub.Api/README.md`.
+
+## Known limitations
+
+- Multi-language resources (English/isiZulu/Afrikaans) exist but aren't yet wired into the screens - UI text is currently English-only.
+- No dedicated Settings screen yet.
+- No automated tests yet.
+- Verified by careful review rather than a live build in this dev environment - first build may surface something minor.
 
 ## Author
 
-**Jacob Wally**
-
-Software Development Student
-
-GitHub: [@Jxcob-Wxlly](https://github.com/Jxcob-Wxlly)
-
----
-
-## Project Status
-
-**Version:** 1.0
-**Platform:** Android
-**Status:** Development / Academic Project
-
----
+Siyabonga Ndlovu - ST10443863
