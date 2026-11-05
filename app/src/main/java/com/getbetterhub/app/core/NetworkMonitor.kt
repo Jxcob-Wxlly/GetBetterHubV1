@@ -21,8 +21,17 @@ class NetworkMonitor(context: Context) {
 
     private val callback = object : ConnectivityManager.NetworkCallback() {
         override fun onAvailable(network: Network) {
-            _online.value = true
-            AppLog.d("Network", "online")
+            // Not trusted yet: the link is up but DNS/TLS may not work. Wait for VALIDATED below.
+            AppLog.d("Network", "available (waiting for validation)")
+        }
+
+        override fun onCapabilitiesChanged(network: Network, caps: NetworkCapabilities) {
+            val usable = caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
+                caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+            if (_online.value != usable) {
+                _online.value = usable
+                AppLog.d("Network", "validated online=$usable")
+            }
         }
 
         override fun onLost(network: Network) {
@@ -42,6 +51,7 @@ class NetworkMonitor(context: Context) {
     private fun checkOnline(): Boolean {
         val network = manager.activeNetwork ?: return false
         val caps = manager.getNetworkCapabilities(network) ?: return false
-        return caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+        return caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
+            caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
     }
 }
