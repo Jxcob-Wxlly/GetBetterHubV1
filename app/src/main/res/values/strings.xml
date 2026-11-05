@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Web client ID of the Google Cloud OAuth client (same one the backend uses as Google:ClientId). -->
-    <string name="google_web_client_id" translatable="false">REPLACE_WITH_YOUR_GOOGLE_OAUTH_WEB_CLIENT_ID</string>
+    <string name="google_web_client_id" translatable="false">585367515777-r4t3cs9vk2s99q23u0npak08c782ssei.apps.googleusercontent.com</string>
     <string name="app_name">Get Better Hub</string>
     <string name="synced">Synced</string>
     <string name="syncing">Syncing…</string>
