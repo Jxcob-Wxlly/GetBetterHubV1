@@ -298,6 +298,8 @@ class GbhRepository(private val db: GbhDatabase) {
     ) { a, b, c, d -> a + b + c + d }
 
     /** One-shot count of everything still waiting to be pushed (used to decide whether to retry). */
+    @Volatile var lastSyncError: String? = null
+
     suspend fun pendingNow(): Int = observePendingCount().first()
 
     // ---- Sync sweep ----
@@ -306,30 +308,53 @@ class GbhRepository(private val db: GbhDatabase) {
      *  once everything is caught up, and each item only flips to synced after a real success. */
     suspend fun syncPendingWithServer(network: GbhNetworkRepository, notificationsEnabled: Boolean = true, language: String = "en") {
         AppLog.d(TAG, "sync sweep started")
-        db.profileDao().getOnce()?.takeIf { !it.synced }?.let { local ->
-            val result = network.pushProfile(local.toDomain().toRequest(notificationsEnabled, language))
-            if (result is NetworkResult.Success) db.profileDao().markSynced() else AppLog.w(TAG, "profile push failed: $result")
-        }
-        db.recentSessionDao().getUnsynced().forEach { session ->
-            val ok = pushPracticeSession(network, session.instrument, session.drillType, session.mood, session.durationSeconds)
-            if (ok) db.recentSessionDao().markSynced(session.id) else AppLog.w(TAG, "practice session ${session.id} push failed")
-        }
-        db.lyricDraftDao().getUnsynced().forEach { draft ->
-            val result = network.saveLyricDraft(draft.id, draft.title, draft.content)
-            if (result is NetworkResult.Success) db.lyricDraftDao().markSynced(draft.id) else AppLog.w(TAG, "lyric draft push failed: $result")
-        }
-        db.journalTakeDao().getUnsynced().forEach { take ->
-            val audioUrl = take.localFilePath?.let { path ->
-                val file = java.io.File(path)
-                if (file.exists()) network.uploadAudio(file) else null
+        lastSyncError = null
+        fun fail(what: String, r: Any?) {
+            val msg = when (r) {
+                is NetworkResult.ApiError -> "$what: server ${r.code}"
+                is NetworkResult.NetworkError -> "$what: ${r.message}"
+                else -> what
             }
-            val result = network.syncJournalEntry(audioUrl = audioUrl, note = take.title)
-            if (result is NetworkResult.Success) db.journalTakeDao().markSynced(take.id) else AppLog.w(TAG, "journal take push failed: $result")
+            AppLog.w(TAG, msg)
+            if (lastSyncError == null) lastSyncError = msg
         }
-        db.arenaPostDao().getUnsynced().forEach { post ->
-            val url = post.audioUrl ?: return@forEach
-            val result = network.createPerformancePost(url, challengeId = null, caption = post.caption)
-            if (result is NetworkResult.Success) db.arenaPostDao().markSynced(post.id)
+        suspend fun section(name: String, block: suspend () -> Unit) {
+            try { block() } catch (e: Exception) { AppLog.w(TAG, "$name sweep crashed", e); if (lastSyncError == null) lastSyncError = "$name: ${e.message}" }
+        }
+        section("sessions") {
+            db.recentSessionDao().getUnsynced().forEach { session ->
+                val r = network.syncPracticeSession(session.instrument, session.drillType, session.mood, session.durationSeconds)
+                if (r is NetworkResult.Success) db.recentSessionDao().markSynced(session.id) else fail("session", r)
+            }
+        }
+        section("profile") {
+            db.profileDao().getOnce()?.takeIf { !it.synced }?.let { local ->
+                val r = network.pushProfile(local.toDomain().toRequest(notificationsEnabled, language))
+                if (r is NetworkResult.Success) db.profileDao().markSynced() else fail("profile", r)
+            }
+        }
+        section("lyrics") {
+            db.lyricDraftDao().getUnsynced().forEach { draft ->
+                val r = network.saveLyricDraft(draft.id, draft.title, draft.content)
+                if (r is NetworkResult.Success) db.lyricDraftDao().markSynced(draft.id) else fail("lyrics", r)
+            }
+        }
+        section("journal") {
+            db.journalTakeDao().getUnsynced().forEach { take ->
+                val audioUrl = take.localFilePath?.let { path ->
+                    val file = java.io.File(path)
+                    if (file.exists()) network.uploadAudio(file) else null
+                }
+                val r = network.syncJournalEntry(audioUrl = audioUrl, note = take.title)
+                if (r is NetworkResult.Success) db.journalTakeDao().markSynced(take.id) else fail("journal", r)
+            }
+        }
+        section("arena") {
+            db.arenaPostDao().getUnsynced().forEach { post ->
+                val url = post.audioUrl ?: return@forEach
+                val r = network.createPerformancePost(url, challengeId = null, caption = post.caption)
+                if (r is NetworkResult.Success) db.arenaPostDao().markSynced(post.id) else fail("arena", r)
+            }
         }
     }
 
