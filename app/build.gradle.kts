@@ -49,10 +49,10 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField("String", "API_BASE_URL", "\"${apiBaseUrl ?: "http://localhost:5080/"}\"")
+            buildConfigField("String", "API_BASE_URL", "\"${apiBaseUrl ?: "https://gbh-api-siya-gjaqagegf8ajh6g6.southafricanorth-01.azurewebsites.net/"}\"")
         }
         release {
-            buildConfigField("String", "API_BASE_URL", "\"${apiBaseUrl ?: "https://REPLACE_WITH_DEPLOYED_API_HOST/"}\"")
+            buildConfigField("String", "API_BASE_URL", "\"${apiBaseUrl ?: "https://gbh-api-siya-gjaqagegf8ajh6g6.southafricanorth-01.azurewebsites.net/"}\"")
             signingConfigs.findByName("release")?.let { signingConfig = it }
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
