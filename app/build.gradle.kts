@@ -37,6 +37,14 @@ android {
     }
 
     signingConfigs {
+        // A fixed debug key (committed on purpose) so every build, including GitHub Actions builds,
+        // has the same SHA-1 fingerprint. Google Sign-In checks that fingerprint.
+        getByName("debug") {
+            storeFile = file("debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+        }
         if (keystoreProps.containsKey("storeFile")) {
             create("release") {
                 storeFile = rootProject.file(keystoreProps.getProperty("storeFile"))
