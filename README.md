@@ -6,7 +6,7 @@ Built for **OPSC6312 (Open Source Coding)**, Portfolio of Evidence, **Part 3 (fi
 
 **Live API (Azure App Service):** https://gbh-api-siya-gjaqagegf8ajh6g6.southafricanorth-01.azurewebsites.net/swagger
 
-**Demonstration video (final app on a physical phone):** https://youtu.be/b9kKAJYuNGk (Final Part video: https://youtu.be/b9kKAJYuNGk?si=mXTd2mYtGCbAHchb)
+**Demonstration video (final app on a physical phone):** https://youtu.be/b9kKAJYuNGk?si=mXTd2mYtGCbAHchb (Part 2 prototype video: https://youtu.be/sl6WmZgiOac?si=gEWJmVy7EOq6vkgt) 
 
 | | |
 |---|---|
@@ -115,6 +115,7 @@ This is "near real time", driven by WorkManager and sync. Server-pushed FCM mess
    ```
    dotnet run
    ```
+   If no EF migrations exist the API creates the schema on first run. **If you have an older local database from before this version, drop it first** (the final build added columns and tables).
 4. Swagger UI is at `/swagger`.
 
 ### Android app on a physical phone
@@ -129,17 +130,19 @@ This is "near real time", driven by WorkManager and sync. Server-pushed FCM mess
 
 ## 7. Screenshots
 
-Design mockups the build follows are in `docs/images/mockups/`. Screenshots from the finished app on a real phone go in `docs/images/screenshots/`.
+Taken on a physical Android phone running the signed build. Files are in `docs/images/screenshots/`. The original design mockups the build follows are kept in the same folder as `mockup-XX.jpg`.
 
-| Profile editor | Public profile | Bell panel |
+| Sign in (email + Google SSO) | Home (Synced pill, XP, streak) | Practice Roulette |
 |---|---|---|
-| ![Profile](docs/images/mockups/mockup-11.jpg) | ![Public profile](docs/images/mockups/mockup-17.jpg) | ![Bell](docs/images/mockups/mockup-12.jpg) |
+| ![Sign in](docs/images/screenshots/login.jpg) | ![Home](docs/images/screenshots/home.jpg) | ![Practice Roulette](docs/images/screenshots/practice.jpg) |
 
-| Settings (isiZulu) | Settings (isiXhosa) | Practice Roulette |
+| Achievements | Profile | Settings (language, reminders) |
 |---|---|---|
-| ![Zulu](docs/images/mockups/mockup-16.jpg) | ![Xhosa](docs/images/mockups/mockup-18.jpg) | ![Practice](docs/images/mockups/mockup-27.jpg) |
+| ![Achievements](docs/images/screenshots/achievements.jpg) | ![Profile](docs/images/screenshots/profile.jpg) | ![Settings](docs/images/screenshots/settings.jpg) |
 
-_Replace or add rows above with real-phone screenshots (Home, Practice, Profile, Settings in each language, Achievements) before submitting._
+| Practice session synced to the server |
+|---|
+| ![Synced session](docs/images/screenshots/synced.jpg) |
 
 ## 8. Known limitations and future work
 
