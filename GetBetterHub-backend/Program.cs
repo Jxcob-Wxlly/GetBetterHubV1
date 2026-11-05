@@ -88,11 +88,9 @@ using (var scope = app.Services.CreateScope())
     else db.Database.EnsureCreated();
 }
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+// Swagger stays on in production too so the deployed API can be demonstrated and tested in a browser.
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 // Serves the uploaded audio files saved by UploadsController from wwwroot/uploads/... —
