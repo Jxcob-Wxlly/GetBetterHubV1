@@ -12,6 +12,7 @@ import com.getbetterhub.app.ui.screens.JournalTake
 import com.getbetterhub.app.ui.screens.LyricDraft
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import java.util.UUID
 
@@ -296,6 +297,9 @@ class GbhRepository(private val db: GbhDatabase) {
         db.profileDao().observeUnsyncedCount()
     ) { a, b, c, d -> a + b + c + d }
 
+    /** One-shot count of everything still waiting to be pushed (used to decide whether to retry). */
+    suspend fun pendingNow(): Int = observePendingCount().first()
+
     // ---- Sync sweep ----
     /** Call whenever the app is signed in and might have regained connectivity (app launch,
      *  app resume). Pushes anything still marked unsynced; safe to call often — it's a no-op
@@ -304,15 +308,15 @@ class GbhRepository(private val db: GbhDatabase) {
         AppLog.d(TAG, "sync sweep started")
         db.profileDao().getOnce()?.takeIf { !it.synced }?.let { local ->
             val result = network.pushProfile(local.toDomain().toRequest(notificationsEnabled, language))
-            if (result is NetworkResult.Success) db.profileDao().markSynced()
+            if (result is NetworkResult.Success) db.profileDao().markSynced() else AppLog.w(TAG, "profile push failed: $result")
         }
         db.recentSessionDao().getUnsynced().forEach { session ->
             val ok = pushPracticeSession(network, session.instrument, session.drillType, session.mood, session.durationSeconds)
-            if (ok) db.recentSessionDao().markSynced(session.id)
+            if (ok) db.recentSessionDao().markSynced(session.id) else AppLog.w(TAG, "practice session ${session.id} push failed")
         }
         db.lyricDraftDao().getUnsynced().forEach { draft ->
             val result = network.saveLyricDraft(draft.id, draft.title, draft.content)
-            if (result is NetworkResult.Success) db.lyricDraftDao().markSynced(draft.id)
+            if (result is NetworkResult.Success) db.lyricDraftDao().markSynced(draft.id) else AppLog.w(TAG, "lyric draft push failed: $result")
         }
         db.journalTakeDao().getUnsynced().forEach { take ->
             val audioUrl = take.localFilePath?.let { path ->
@@ -320,7 +324,7 @@ class GbhRepository(private val db: GbhDatabase) {
                 if (file.exists()) network.uploadAudio(file) else null
             }
             val result = network.syncJournalEntry(audioUrl = audioUrl, note = take.title)
-            if (result is NetworkResult.Success) db.journalTakeDao().markSynced(take.id)
+            if (result is NetworkResult.Success) db.journalTakeDao().markSynced(take.id) else AppLog.w(TAG, "journal take push failed: $result")
         }
         db.arenaPostDao().getUnsynced().forEach { post ->
             val url = post.audioUrl ?: return@forEach
