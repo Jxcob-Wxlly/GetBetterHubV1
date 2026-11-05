@@ -4,7 +4,9 @@ A cross-discipline music practice app for Android. It gives you practice drills 
 
 Built for **OPSC6312 (Open Source Coding)**, Portfolio of Evidence, **Part 3 (final)**.
 
-**Demo video:** _add the final YouTube link here_ (Part 2 prototype video: https://youtu.be/sl6WmZgiOac?si=gEWJmVy7EOq6vkgt)
+**Live API (Azure App Service):** https://gbh-api-siya-gjaqagegf8ajh6g6.southafricanorth-01.azurewebsites.net/swagger
+
+**Demonstration video (final app on a physical phone):** https://youtu.be/b9kKAJYuNGk (Final Part video: https://youtu.be/b9kKAJYuNGk?si=mXTd2mYtGCbAHchb)
 
 | | |
 |---|---|
@@ -113,7 +115,6 @@ This is "near real time", driven by WorkManager and sync. Server-pushed FCM mess
    ```
    dotnet run
    ```
-   If no EF migrations exist the API creates the schema on first run. **If you have an older local database from before this version, drop it first** (the final build added columns and tables).
 4. Swagger UI is at `/swagger`.
 
 ### Android app on a physical phone
