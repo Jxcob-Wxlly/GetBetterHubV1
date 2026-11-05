@@ -19,13 +19,16 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
+      - uses: android-actions/setup-android@v3
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: 8.7
       - name: Unit tests
         run: gradle testDebugUnitTest --stacktrace
       - name: Build debug APK
-        run: gradle assembleDebug --stacktrace
+        # API_BASE_URL is a repository variable (Settings > Secrets and variables > Actions > Variables).
+        # When it is set, the APK talks to the deployed API; otherwise it falls back to localhost.
+        run: gradle assembleDebug --stacktrace -PapiBaseUrl="${{ vars.API_BASE_URL }}"
       - name: Upload test report
         if: always()
         uses: actions/upload-artifact@v4
