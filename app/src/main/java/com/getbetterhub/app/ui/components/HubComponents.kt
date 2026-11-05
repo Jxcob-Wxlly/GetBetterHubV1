@@ -212,7 +212,12 @@ fun HubTextField(
         androidx.compose.foundation.text.BasicTextField(
             value = value,
             onValueChange = onValueChange,
+            // fillMaxWidth makes the whole pill tappable; without it the field is only as wide as its text
+            modifier = Modifier.fillMaxWidth(),
             singleLine = true,
+            keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(
+                keyboardType = if (isPassword) androidx.compose.ui.text.input.KeyboardType.Password else androidx.compose.ui.text.input.KeyboardType.Email
+            ),
             textStyle = androidx.compose.ui.text.TextStyle(
                 color = TextPrimary,
                 fontSize = androidx.compose.material3.MaterialTheme.typography.bodyLarge.fontSize
