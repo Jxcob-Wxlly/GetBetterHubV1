@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -45,7 +46,8 @@ fun GbhTopBar(
     onBellDismiss: () -> Unit,
     onOpenSettings: () -> Unit,
     onLogout: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onSyncClick: () -> Unit = {}
 ) {
     Row(
         modifier = modifier
@@ -75,7 +77,7 @@ fun GbhTopBar(
 
         CircleIconButton(icon = Icons.Default.Search, description = stringResource(R.string.cd_search), onClick = onSearchClick)
         Spacer(Modifier.width(6.dp))
-        SyncStatusPill(syncState)
+        SyncStatusPill(syncState, onSyncClick)
         Spacer(Modifier.width(6.dp))
 
         Box {
@@ -162,7 +164,7 @@ private fun CircleIconButton(icon: ImageVector, description: String, onClick: ()
 }
 
 @Composable
-private fun SyncStatusPill(state: SyncPillState) {
+private fun SyncStatusPill(state: SyncPillState, onClick: () -> Unit = {}) {
     val (icon, color, label) = when (state) {
         SyncPillState.Synced -> Triple(Icons.Default.Check, AccentGreen, stringResource(R.string.synced))
         SyncPillState.Syncing -> Triple(Icons.Default.Sync, PendingTagText, stringResource(R.string.syncing))
@@ -171,6 +173,8 @@ private fun SyncStatusPill(state: SyncPillState) {
     Row(
         modifier = Modifier
             .widthIn(max = 132.dp)
+            .clip(RoundedCornerShape(50))
+            .clickable { onClick() }
             .background(SurfaceCard, RoundedCornerShape(50))
             .border(1.dp, SurfaceCardBorder, RoundedCornerShape(50))
             .padding(horizontal = 10.dp, vertical = 8.dp),
