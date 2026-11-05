@@ -16,7 +16,7 @@ val keystoreProps = Properties().apply {
 // Where the app finds the API. Override at build time, e.g.
 //   ./gradlew assembleDebug -PapiBaseUrl=http://localhost:5080/      (phone + `adb reverse tcp:5080 tcp:5080`)
 //   ./gradlew assembleRelease -PapiBaseUrl=https://my-api.azurewebsites.net/
-val apiBaseUrl: String? = (project.findProperty("apiBaseUrl") as String?)
+val apiBaseUrl: String? = (project.findProperty("apiBaseUrl") as String?)?.takeIf { it.isNotBlank() }
 
 android {
     namespace = "com.getbetterhub.app"
