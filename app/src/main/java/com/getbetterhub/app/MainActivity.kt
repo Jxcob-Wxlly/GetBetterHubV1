@@ -176,9 +176,16 @@ fun GbhApp(
                     }
                 }
             } catch (e: ApiException) {
-                AppLog.w(TAG, "google sign-in failed", e)
-                loginError = context.getString(R.string.err_google_cancel)
+                AppLog.w(TAG, "google sign-in failed code=${e.statusCode}", e)
+                loginError = context.getString(R.string.err_google_cancel) + " (code ${e.statusCode})"
             }
+        } else {
+            // Cancelled, or Google rejected the app (code 10 = OAuth client not set up for this build).
+            val code = try {
+                GoogleSignIn.getSignedInAccountFromIntent(result.data).exception.let { (it as? ApiException)?.statusCode }
+            } catch (e: Exception) { null }
+            loginError = context.getString(R.string.err_google_cancel) + (code?.let { " (code $it)" } ?: "")
+            regError = loginError
         }
     }
 
