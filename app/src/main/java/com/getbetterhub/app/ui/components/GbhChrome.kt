@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.Icon
@@ -142,7 +141,7 @@ fun GbhTopBar(
         }
         Spacer(Modifier.width(6.dp))
         CircleIconButton(
-            icon = Icons.AutoMirrored.Filled.ExitToApp,
+            icon = Icons.Default.ExitToApp,
             description = stringResource(R.string.cd_logout),
             onClick = onLogout
         )
@@ -194,7 +193,7 @@ enum class GbhTab(@StringRes val labelRes: Int, val route: String, val icon: Ima
     Home(R.string.nav_home, "home", Icons.Default.Home),
     Practice(R.string.nav_practice, "practice", Icons.Default.Casino),
     Mood(R.string.nav_mood, "mood", Icons.Default.Favorite),
-    Lyrics(R.string.nav_lyrics, "lyrics", Icons.AutoMirrored.Filled.MenuBook),
+    Lyrics(R.string.nav_lyrics, "lyrics", Icons.Default.MenuBook),
     Journal(R.string.nav_journal, "journal", Icons.Default.Mic),
     Arena(R.string.nav_arena, "arena", Icons.Default.EmojiEvents)
 }
