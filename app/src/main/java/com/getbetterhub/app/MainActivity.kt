@@ -451,7 +451,16 @@ fun GbhApp(
                 scope.launch { repository.markNotificationsRead() }
                 nav.navigate(Routes.Settings) { launchSingleTop = true }
             },
-            onLogout = { signOut(nav) }
+            onLogout = { signOut(nav) },
+            onSyncClick = {
+                scope.launch {
+                    if (!online) { Toast.makeText(context, "Offline", Toast.LENGTH_SHORT).show(); return@launch }
+                    while (isSyncing) kotlinx.coroutines.delay(200)
+                    doSync()
+                    val err = repository.lastSyncError
+                    Toast.makeText(context, if (err == null && repository.pendingNow() == 0) "Synced" else "Sync problem: ${err ?: "still pending"}", Toast.LENGTH_LONG).show()
+                }
+            }
         )
     }
 
