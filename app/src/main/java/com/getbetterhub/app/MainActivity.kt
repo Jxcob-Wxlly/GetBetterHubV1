@@ -233,37 +233,52 @@ fun GbhApp(
     }
 
     // ---- Sync: pushes anything pending, pulls follower counts and server notifications ----
-    fun runSync() {
+    suspend fun doSync() {
         if (isSyncing) return
-        scope.launch {
-            isSyncing = true
-            try {
-                repository.syncPendingWithServer(networkRepository, practiceReminders, language.tag)
-                repository.pullProfile(networkRepository)
-                val fresh = repository.pullServerNotifications(networkRepository)
-                fresh.forEach { n ->
-                    val allowed = when (n.type) {
-                        "new_follower" -> alertNewFollowers
-                        "follow_request" -> alertFollowRequests
-                        "request_approved" -> alertRequestsApproved
-                        else -> true
-                    }
-                    if (allowed) {
-                        Notifier.show(context, n.id.hashCode(), context.getString(R.string.app_name), notificationText(context, n))
-                    }
+        isSyncing = true
+        try {
+            repository.syncPendingWithServer(networkRepository, practiceReminders, language.tag)
+            repository.pullProfile(networkRepository)
+            val fresh = repository.pullServerNotifications(networkRepository)
+            fresh.forEach { n ->
+                val allowed = when (n.type) {
+                    "new_follower" -> alertNewFollowers
+                    "follow_request" -> alertFollowRequests
+                    "request_approved" -> alertRequestsApproved
+                    else -> true
                 }
-                lastSyncMillis = System.currentTimeMillis()
-                settings.lastSyncMillis = lastSyncMillis
-            } finally {
-                isSyncing = false
+                if (allowed) {
+                    Notifier.show(context, n.id.hashCode(), context.getString(R.string.app_name), notificationText(context, n))
+                }
             }
+            lastSyncMillis = System.currentTimeMillis()
+            settings.lastSyncMillis = lastSyncMillis
+        } catch (e: Exception) {
+            AppLog.w("Sync", "sync attempt failed", e)
+        } finally {
+            isSyncing = false
         }
     }
 
-    // The moment the user is signed in and the phone has a connection, sync. Runs again when the
-    // phone reconnects after being offline, which is what makes offline mode "catch up".
+    fun runSync() {
+        scope.launch { doSync() }
+    }
+
+    // The moment the user is signed in and the phone has a connection, sync. The connectivity
+    // callback fires as soon as the radio is up, which can be a moment before DNS/TLS actually
+    // work, so the first attempt may fail. We therefore retry with a growing delay until nothing
+    // is pending (or we give up and wait for the next reconnect / tap on the sync pill).
     LaunchedEffect(isSignedIn, online) {
-        if (isSignedIn && online) runSync()
+        if (isSignedIn && online) {
+            var attempt = 0
+            while (attempt < 8) {
+                kotlinx.coroutines.delay(if (attempt == 0) 1500L else 4000L * attempt)
+                while (isSyncing) kotlinx.coroutines.delay(300)
+                doSync()
+                if (repository.pendingNow() == 0) break
+                attempt++
+            }
+        }
     }
 
     LaunchedEffect(isSignedIn) {
